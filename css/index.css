@@ -1,0 +1,100 @@
+body
+{
+	margin: 0;
+	overflow: none;
+	cursor: wait;
+}
+
+@font-face 
+{
+    font-family: "Digital Clock Font";
+    src: url("../fonts/ds_digital.ttf");
+}
+
+#bottom-clock-btns
+{
+	top: 0;
+	height: 20vh;
+	width: 100%;
+	position: fixed;
+	z-index: 1;
+	margin-top: 80vh;
+	display: block;
+}
+
+#clock-viewport
+{
+	height: 100vh;
+	width: 100%;
+	display: block;
+	background: black;
+}
+
+#clock-timearea
+{
+	display: block;
+	width: 100%;
+}
+
+#clock-time-text, #clock-time-text-date, #clock-stopwatch-time
+{
+	font-family: "Digital Clock Font";
+	color: red;
+	font-size: 1000%;
+	margin: 0;
+	text-align: center;
+}
+
+#clock-stopwatch-time
+{
+	font-size: 400%;
+	color: orange;
+}
+
+#clock-time-text-date
+{
+	font-size: 500%;
+}
+
+#clock-h1
+{
+	margin: 0;
+	font-family: "Digital Clock Font";
+	text-align: center;
+	color: red;
+	font-size: 300%;
+}
+
+button
+{
+	border: none;
+	padding: 1%;
+	background: black;
+	font-size: 200%;
+	font-family: "Digital Clock Font";
+	color: red;
+	transition-duration: 0.5s;
+	-webkit-transition-duration: 0.5s;
+	-o-transition-duration: 0.5s;
+}
+
+#powerbtn
+{
+	border: none;
+	padding: 1%;
+	background: black;
+	font-size: 200%;
+	font-family: "Digital Clock Font";
+	color: rgb(63, 64, 66);
+}
+
+button:hover
+{
+	color: tomato;
+	cursor: pointer;
+}
+
+button:focus
+{
+	outline: none;
+}
