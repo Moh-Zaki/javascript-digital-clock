@@ -206,6 +206,18 @@ function FormatClockNumber(n)
     return n > 9 ? "" + n: "0" + n;
 }
 
+function FormatMillisecondsNumber(n)
+{
+	if (n < 100)
+	{
+		return "0" + String(n);
+	}
+	else
+	{
+		return String(n);
+	}
+}
+
 function getDayName(m_nDay)
 {
 	switch (m_nDay)
@@ -271,6 +283,6 @@ function processStopwatchTime()
 		m_nStopwatchTimer++;
 	}	
 	var m_StopwatchDate = new Date(m_nStopwatchTimer * 10);
-	m_szStopwatchString += FormatClockNumber(m_StopwatchDate.getHours()) + ":" + FormatClockNumber(m_StopwatchDate.getMinutes()) + ":" + FormatClockNumber(m_StopwatchDate.getSeconds()) + " " + FormatClockNumber(m_StopwatchDate.getMilliseconds());
+	m_szStopwatchString += FormatClockNumber(m_StopwatchDate.getUTCHours()) + ":" + FormatClockNumber(m_StopwatchDate.getMinutes()) + ":" + FormatClockNumber(m_StopwatchDate.getSeconds()) + " " + FormatMillisecondsNumber(m_StopwatchDate.getMilliseconds());
 	return m_szStopwatchString; 
 }
