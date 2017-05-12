@@ -5,20 +5,34 @@ body
 	cursor: wait;
 }
 
+p
+{
+	margin: 0;
+	padding: 0;
+}
+
 @font-face 
 {
     font-family: "Digital Clock Font";
     src: url("../fonts/ds_digital.ttf");
 }
 
+#clock-time-alarm-text
+{
+	font-family: "Digital Clock Font";
+	font-size: 100%;
+	text-align: center;
+	color: orange;
+}
+
 #bottom-clock-btns
 {
 	top: 0;
-	height: 20vh;
+	height: 40vh;
 	width: 100%;
 	position: fixed;
 	z-index: 1;
-	margin-top: 80vh;
+	margin-top: 60vh;
 	display: block;
 }
 
@@ -33,6 +47,19 @@ body
 #clock-timearea
 {
 	display: block;
+	width: 100%;
+}
+
+#stopwatch-btns
+{
+	padding: 0;
+	margin: 0;
+}
+
+#buttons-below
+{
+	display: block;
+	table-layout: fixed;
 	width: 100%;
 }
 
@@ -69,7 +96,7 @@ button
 {
 	border: none;
 	padding: 1%;
-	background: black;
+	background: transparent;
 	font-size: 200%;
 	font-family: "Digital Clock Font";
 	color: red;
@@ -82,7 +109,7 @@ button
 {
 	border: none;
 	padding: 1%;
-	background: black;
+	background: transparent;
 	font-size: 200%;
 	font-family: "Digital Clock Font";
 	color: rgb(63, 64, 66);
@@ -97,4 +124,33 @@ button:hover
 button:focus
 {
 	outline: none;
+}
+
+form
+{
+	display: inline-block;
+}
+
+input
+{
+	padding: 1%;
+	margin: 1%;
+	color: red;
+	font-family: "Digital Clock Font";
+	font-size: 200%;
+	background: black;
+	border: 2px solid white;
+}
+
+input:focus
+{
+	outline: none;
+}
+
+#alarm-form-inner-container
+{
+	color: white;
+	background: rgba(0, 0, 0, 0.75);
+	margin: 0;
+	display: none;
 }
