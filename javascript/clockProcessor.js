@@ -395,6 +395,7 @@ function ToggleAlarm(m_szAlarmMode)
 		document.querySelector("#clock-viewport").style.background = "black";
 		document.querySelector("#alarm-btns").innerHTML = "";
 		document.querySelector("#clock-time-alarm-text").innerHTML = "";
+		document.querySelector("#alarm-form-inner-container").style.display = "none";
 		document.querySelector("#alarm-btns").innerHTML += "<button onclick=\"ToggleAlarm('ALARM_ON')\">Alarm aan</button>";
 		break;
 		// For debugging purposes only
