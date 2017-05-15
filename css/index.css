@@ -36,6 +36,22 @@ p
 	display: block;
 }
 
+#actual-button-wrapper, #bottom-lap-window
+{
+	vertical-align: top;
+	width: 45%;
+	display: inline-block;
+}
+
+#stopwatch-lap-text
+{
+	color: red;
+	text-align: center;
+	font-size: 100%;
+	font-family: "Digital Clock Font";
+	column-count: 4;
+}
+
 #clock-viewport
 {
 	height: 100vh;

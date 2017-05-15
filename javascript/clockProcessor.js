@@ -14,6 +14,7 @@ var ms_bAlarmSet = false;
 var ms_bAlarmGoingOff = false;
 var ms_bAlarmOn = false;
 var ms_nTargetTime;
+var ms_nNumOfLaps = 0;
 
 function ProcessClock()
 {
@@ -251,6 +252,8 @@ function ToggleStopwatch(m_szStopwatchMode)
 		m_nStopwatchTimer = 0;
 		document.querySelector("#stopwatch-btns").innerHTML = "";
 		document.querySelector("#stopwatch-btns").innerHTML += "<button onclick=\"ToggleStopwatch('STOPWATCH_ON')\">Stopwatch aan</button>";
+		document.querySelector("#stopwatch-lap-text").innerHTML = "";
+		ms_nNumOfLaps = 0;
 		break;
 		case 'STOPWATCH_RESET':
 		if (ms_bStopwatchInitialized && ms_bStopwatchEnabled)
@@ -278,7 +281,24 @@ function ToggleStopwatch(m_szStopwatchMode)
 			ms_bShouldCountStopwatch = true;
 			document.querySelector("#stopwatch-btns").innerHTML = "";
 			document.querySelector("#stopwatch-btns").innerHTML += "<button onclick=\"ToggleStopwatch('STOPWATCH_STOP')\">Stop stopwatch</button>";
+			document.querySelector("#stopwatch-btns").innerHTML += "<button onclick=\"ToggleStopwatch('STOPWATCH_SET_LAP')\">Nieuwe ronde</button>";
+			document.querySelector("#stopwatch-btns").innerHTML += "<button onclick=\"ToggleStopwatch('STOPWATCH_RESET_ALL_LAPS')\">Reset alle rondes</button>";
 		}
+		break;
+		case 'STOPWATCH_SET_LAP':
+		if (ms_bStopwatchInitialized && ms_bStopwatchEnabled && ms_bShouldCountStopwatch)
+		{
+			ms_nNumOfLaps++;
+			document.querySelector("#stopwatch-lap-text").innerHTML += "LAP " + ms_nNumOfLaps + " - " + getCurrentStopwatchTime() + "<br>";
+		}
+		break;
+		case 'STOPWATCH_RESET_ALL_LAPS':
+		if (ms_bStopwatchInitialized && ms_bStopwatchEnabled && ms_bShouldCountStopwatch)
+		{
+			ms_nNumOfLaps = 0;
+			document.querySelector("#stopwatch-lap-text").innerHTML = "";
+		}
+		break;
 	}
 }
 
@@ -294,13 +314,20 @@ function FormatClockNumber(n)
 
 function FormatMillisecondsNumber(n)
 {
-	if (n < 100)
+	if (!n)
 	{
-		return "0" + String(n);
+		return "000";
 	}
 	else
 	{
-		return String(n);
+		if (n < 100)
+		{
+			return "0" + String(n);
+		}
+		else
+		{
+			return String(n);
+		}
 	}
 }
 
@@ -371,6 +398,14 @@ function processStopwatchTime()
 	var m_StopwatchDate = new Date(m_nStopwatchTimer * 10);
 	m_szStopwatchString += FormatClockNumber(m_StopwatchDate.getUTCHours()) + ":" + FormatClockNumber(m_StopwatchDate.getMinutes()) + ":" + FormatClockNumber(m_StopwatchDate.getSeconds()) + " " + FormatMillisecondsNumber(m_StopwatchDate.getMilliseconds());
 	return m_szStopwatchString; 
+}
+
+function getCurrentStopwatchTime()
+{
+	var m_szStopwatchString = "";
+	var m_StopwatchDate = new Date(m_nStopwatchTimer * 10);
+	m_szStopwatchString += FormatClockNumber(m_StopwatchDate.getUTCHours()) + ":" + FormatClockNumber(m_StopwatchDate.getMinutes()) + ":" + FormatClockNumber(m_StopwatchDate.getSeconds()) + " " + FormatMillisecondsNumber(m_StopwatchDate.getMilliseconds());
+	return m_szStopwatchString; 	
 }
 
 function ToggleAlarm(m_szAlarmMode)

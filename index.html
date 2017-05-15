@@ -17,21 +17,26 @@
 				<p id="clock-stopwatch-time"></p>
 			</div>
 			<div id="bottom-clock-btns">
-				<button onclick="SwitchClockmode('CLOCKMODE_NL')">NL-modus</button>
-				<button onclick="SwitchClockmode('CLOCKMODE_VS')">VS-modus</button>
-				<div id="buttons-below">
-					<div id="stopwatch-btns">
-						<button onclick="ToggleStopwatch('STOPWATCH_ON')">Stopwatch aan</button>
+				<div id="actual-button-wrapper">
+					<button onclick="SwitchClockmode('CLOCKMODE_NL')">NL-modus</button>
+					<button onclick="SwitchClockmode('CLOCKMODE_VS')">VS-modus</button>
+					<div id="buttons-below">
+						<div id="stopwatch-btns">
+							<button onclick="ToggleStopwatch('STOPWATCH_ON')">Stopwatch aan</button>
+						</div>
+						<div id="alarm-btns">
+							<button onclick="ToggleAlarm('ALARM_ON')">Alarm aan</button>
+						</div>
+						<div id="alarm-form-inner-container">
+							<form>
+								<input id="alarm-form-input" type="time">
+							</form>
+							<button onclick="ToggleAlarmForm('ALARM_FORM_SEND')">Zet alarm</button>
+						</div>
 					</div>
-					<div id="alarm-btns">
-						<button onclick="ToggleAlarm('ALARM_ON')">Alarm aan</button>
-					</div>
-					<div id="alarm-form-inner-container">
-						<form>
-							<input id="alarm-form-input" type="time">
-						</form>
-						<button onclick="ToggleAlarmForm('ALARM_FORM_SEND')">Zet alarm</button>
-					</div>
+				</div>
+				<div id="bottom-lap-window">
+					<p id="stopwatch-lap-text"></p>
 				</div>
 			</div>
 		</div>
