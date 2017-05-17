@@ -25,7 +25,9 @@ function ProcessClock()
 	var m_bShouldBeAlarmAM = false;
 
 	// The clock frames passed according to the difference between the start time and the counter
-	// I don't know how far it could drift off.
+	// I don't know how far it could drift off if not using Date.now
+	// TODO: this system will need to be adapted when timezone configuration will be implemented
+	// as thats where the timers would become a bit more advanced 
 	ms_nClockFrameCurrentTime = Date.now();
 	m_nClockFramesPassed = ms_nClockFrameCurrentTime - ms_nClockFrameStartTime;
 
@@ -397,13 +399,13 @@ function isSummertime(m_Date)
 
 // The stopwatch timer also uses Date.now for accurate time in milliseconds
 // It is possible that the observed time may slowly drift off due to small differences in execution time.
+// This will however be solveable with using Date for calculating the difference.
 function processStopwatchTime()
 {
 	var m_szStopwatchString = "";
 	if (ms_bShouldCountStopwatch && !ms_bClockInLoadingStage)
 	{
 		m_nStopwatchTimer++;
-		console.log(m_nStopwatchTimer);
 	}	
 	var m_StopwatchDate = new Date(m_nStopwatchTimer); 
 	m_szStopwatchString += FormatClockNumber(m_StopwatchDate.getUTCHours()) + ":" + FormatClockNumber(m_StopwatchDate.getMinutes()) + ":" + FormatClockNumber(m_StopwatchDate.getSeconds()) + " " + FormatMillisecondsNumber(m_StopwatchDate.getMilliseconds());
