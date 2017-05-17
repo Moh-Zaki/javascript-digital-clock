@@ -15,13 +15,20 @@ var ms_bAlarmGoingOff = false;
 var ms_bAlarmOn = false;
 var ms_nTargetTime;
 var ms_nNumOfLaps = 0;
+var ms_nClockFrameStartTime = Date.now();
+var ms_nClockFrameCurrentTime = ms_nClockFrameStartTime;
 
 function ProcessClock()
 {
 	var m_szTimeString = "";
 	var m_bShouldBeAM = false;
 	var m_bShouldBeAlarmAM = false;
-	m_nClockFramesPassed++;
+
+	// The clock frames passed according to the difference between the start time and the counter
+	// I don't know how far it could drift off.
+	ms_nClockFrameCurrentTime = Date.now();
+	m_nClockFramesPassed = ms_nClockFrameCurrentTime - ms_nClockFrameStartTime;
+
 	var m_CurrDate = new Date();
 
 	if (!m_bInitialLoadingModePassed)
@@ -70,8 +77,8 @@ function ProcessClock()
 		}
 	}
 
-	// Standaard klok - met of zonder stopwatch
-	if ((m_nClockFramesPassed % 100) == 99)
+	// If 100 clock frames passed, then update the timer
+	if (m_nClockFramesPassed)
 	{
 		// Alarm going off
 		if (ms_bAlarmOn && ms_bAlarmSet)
@@ -193,7 +200,7 @@ function ProcessClock()
 
 			if (ms_bAlarmGoingOff)
 			{
-				if ((m_nClockFramesPassed % 100) > 49)
+				if ((m_nClockFramesPassed % 1000) > 499)
 				{
 					document.querySelector("#clock-viewport").style.background = "white";
 				}
@@ -388,14 +395,17 @@ function isSummertime(m_Date)
 	var a = m_Date.getMonth();
 }
 
+// The stopwatch timer also uses Date.now for accurate time in milliseconds
+// It is possible that the observed time may slowly drift off due to small differences in execution time.
 function processStopwatchTime()
 {
 	var m_szStopwatchString = "";
 	if (ms_bShouldCountStopwatch && !ms_bClockInLoadingStage)
 	{
 		m_nStopwatchTimer++;
+		console.log(m_nStopwatchTimer);
 	}	
-	var m_StopwatchDate = new Date(m_nStopwatchTimer * 10);
+	var m_StopwatchDate = new Date(m_nStopwatchTimer); 
 	m_szStopwatchString += FormatClockNumber(m_StopwatchDate.getUTCHours()) + ":" + FormatClockNumber(m_StopwatchDate.getMinutes()) + ":" + FormatClockNumber(m_StopwatchDate.getSeconds()) + " " + FormatMillisecondsNumber(m_StopwatchDate.getMilliseconds());
 	return m_szStopwatchString; 
 }
@@ -403,7 +413,7 @@ function processStopwatchTime()
 function getCurrentStopwatchTime()
 {
 	var m_szStopwatchString = "";
-	var m_StopwatchDate = new Date(m_nStopwatchTimer * 10);
+	var m_StopwatchDate = new Date(m_nStopwatchTimer);
 	m_szStopwatchString += FormatClockNumber(m_StopwatchDate.getUTCHours()) + ":" + FormatClockNumber(m_StopwatchDate.getMinutes()) + ":" + FormatClockNumber(m_StopwatchDate.getSeconds()) + " " + FormatMillisecondsNumber(m_StopwatchDate.getMilliseconds());
 	return m_szStopwatchString; 	
 }
@@ -416,7 +426,7 @@ function ToggleAlarm(m_szAlarmMode)
 		ms_bAlarmSet = false;
 		ms_bAlarmGoingOff = false;
 		ms_bAlarmOn = true;
-		ms_nTargetTime = new Date();
+		ms_nTargetTime = new Date(); 
 		ms_bInitializedAlarm = true;
 		document.querySelector("#alarm-btns").innerHTML = "";
 		document.querySelector("#alarm-btns").innerHTML += "<button onclick=\"ToggleAlarm('ALARM_OFF')\">Alarm uit</button>";
