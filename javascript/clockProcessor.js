@@ -6,7 +6,6 @@ var ms_bStopwatchEnabled = false;
 var ms_bStopwatchInitialized = false;
 var m_nStopwatchTimer = 0;
 var ms_bShouldCountStopwatch = false;
-var ms_bClockInLoadingStage = true;
 var m_bInitialLoadingModePassed = false;
 
 var ms_bInitializedAlarm = false;
@@ -32,12 +31,6 @@ function ProcessClock()
 	m_nClockFramesPassed = ms_nClockFrameCurrentTime - ms_nClockFrameStartTime;
 
 	var m_CurrDate = new Date();
-
-	if (!m_bInitialLoadingModePassed)
-	{
-		SwitchToLoadingMode(true);
-		m_bInitialLoadingModePassed = true;
-	}
 
 	m_szVSHour = "";
 	m_szVSAlarmHour = "";
@@ -91,11 +84,6 @@ function ProcessClock()
 			}
 		}
 
-		if (ms_bClockInLoadingStage)
-		{
-			SwitchToLoadingMode(false);
-		}
-
 		switch (m_szClockMode)
 		{
 			case 'CLOCKMODE_NL':
@@ -107,14 +95,14 @@ function ProcessClock()
 			document.querySelector("#clock-time-text").innerHTML = m_szTimeString;
 			if (m_CurrDate.getHours() > 19 || m_CurrDate.getHours() < 6)
 			{
-				document.querySelector("#clock-time-text-date").style.textShadow = "0 0 10px red, 0 0 10px red";
-				document.querySelector("#clock-h1").style.textShadow = "0 0 10px red, 0 0 10px red";
-				document.querySelector("#clock-time-text").style.textShadow = "0 0 20px red, 0 0 20px red";
+				document.querySelector("#clock-time-text-date").style.textShadow = "0 0 10px rgb(0, 255, 33), 0 0 10px rgb(0, 255, 33)";
+				//document.querySelector("#clock-h1").style.textShadow = "0 0 10px rgb(0, 255, 33), 0 0 10px rgb(0, 255, 33)";
+				document.querySelector("#clock-time-text").style.textShadow = "0 0 20px rgb(0, 255, 33), 0 0 20px rgb(0, 255, 33)";
 			}
 			else
 			{
 				document.querySelector("#clock-time-text-date").style.textShadow = "none";
-				document.querySelector("#clock-h1").style.textShadow = "none";
+				//document.querySelector("#clock-h1").style.textShadow = "none";
 				document.querySelector("#clock-time-text").style.textShadow = "none";				
 			}
 			break;
@@ -124,23 +112,23 @@ function ProcessClock()
 			document.querySelector("#clock-time-text-date").innerHTML = getDayName(m_CurrDate.getDay()) + " " + FormatClockNumber(m_CurrDate.getDate()) + " " + getMonthName(m_CurrDate.getMonth()) + " " + " " + m_CurrDate.getFullYear();
 			if (m_bShouldBeAM)
 			{
-				m_szTimeString += m_szVSHour + ":" + FormatClockNumber(m_CurrDate.getMinutes()) + ":" + FormatClockNumber(m_CurrDate.getSeconds()) + " AM";
+				m_szTimeString += m_szVSHour + ":" + FormatClockNumber(m_CurrDate.getMinutes()) + ":" + FormatClockNumber(m_CurrDate.getSeconds()) + " <sup>AM</sup>";
 			}
 			else
 			{
-				m_szTimeString += m_szVSHour + ":" + FormatClockNumber(m_CurrDate.getMinutes()) + ":" + FormatClockNumber(m_CurrDate.getSeconds()) + " PM";
+				m_szTimeString += m_szVSHour + ":" + FormatClockNumber(m_CurrDate.getMinutes()) + ":" + FormatClockNumber(m_CurrDate.getSeconds()) + " <sup>PM</sup>";
 			}
 			document.querySelector("#clock-time-text").innerHTML = m_szTimeString;
 			if (m_CurrDate.getHours() > 19 || m_CurrDate.getHours() < 6)
 			{
-				document.querySelector("#clock-time-text-date").style.textShadow = "0 0 10px red, 0 0 10px red";
-				document.querySelector("#clock-h1").style.textShadow = "0 0 10px red, 0 0 10px red";
-				document.querySelector("#clock-time-text").style.textShadow = "0 0 20px red, 0 0 20px red";
+				document.querySelector("#clock-time-text-date").style.textShadow = "0 0 10px rgb(0, 255, 33), 0 0 10px rgb(0, 255, 33)";
+				//document.querySelector("#clock-h1").style.textShadow = "0 0 10px rgb(0, 255, 33), 0 0 10px rgb(0, 255, 33)";
+				document.querySelector("#clock-time-text").style.textShadow = "0 0 20px rgb(0, 255, 33), 0 0 20px rgb(0, 255, 33)";
 			}
 			else
 			{
 				document.querySelector("#clock-time-text-date").style.textShadow = "none";
-				document.querySelector("#clock-h1").style.textShadow = "none";
+				//document.querySelector("#clock-h1").style.textShadow = "none";
 				document.querySelector("#clock-time-text").style.textShadow = "none";				
 			}
 			break;
@@ -162,7 +150,7 @@ function ProcessClock()
 		}
 		if (m_CurrDate.getHours() > 19 || m_CurrDate.getHours() < 6)
 		{
-			document.querySelector("#clock-stopwatch-time").style.textShadow = "0 0 7.5px orange, 0 0 7.5px orange";
+			document.querySelector("#clock-stopwatch-time").style.textShadow = "0 0 7.5px rgb(0, 255, 33), 0 0 7.5px rgb(0, 255, 33)";
 		}
 		else
 		{
@@ -193,7 +181,7 @@ function ProcessClock()
 	
 			if (m_CurrDate.getHours() > 19 || m_CurrDate.getHours() < 6)
 			{
-				document.querySelector("#clock-time-alarm-text").style.textShadow = "0 0 7.5px orange, 0 0 7.5px orange";
+				document.querySelector("#clock-time-alarm-text").style.textShadow = "0 0 7.5px rgb(0, 255, 33), 0 0 7.5px rgb(0, 255, 33)";
 			}
 			else
 			{
@@ -213,30 +201,6 @@ function ProcessClock()
 			}
 		}
 	}
-}
-
-function SwitchToLoadingMode(m_bNewLoadingMode)
-{
-	document.querySelector("body").style.cursor = "wait";
-	if (m_bNewLoadingMode)
-	{
-		document.querySelector("#clock-time-text-date").style.textShadow = "0 0 10px red, 0 0 10px red";
-		document.querySelector("#clock-h1").style.textShadow = "0 0 10px red, 0 0 10px red";
-		document.querySelector("#clock-time-text").style.textShadow = "0 0 20px red, 0 0 20px red";
-		document.querySelector("#clock-time-text-date").innerHTML = "Donderdag 1 Januari 1970";
-		document.querySelector("#clock-time-text").innerHTML = "00:00:00";
-		document.querySelector("#clock-stopwatch-time").style.textShadow = "0 0 7.5px orange, 0 0 7.5px orange";
-		document.querySelector("#clock-time-alarm-text").style.textShadow = "0 0 7.5px orange, 0 0 7.5px orange";
-		document.querySelector("#clock-stopwatch-time").innerHTML = "Laden...";
-		ms_bClockInLoadingStage = m_bNewLoadingMode;
-	}
-	else
-	{
-		ms_bClockInLoadingStage = m_bNewLoadingMode;
-		document.querySelector("body").style.cursor = "initial";
-		document.querySelector("#clock-stopwatch-time").innerHTML = "";
-	}
-
 }
 
 function ToggleStopwatch(m_szStopwatchMode)
@@ -403,11 +367,11 @@ function isSummertime(m_Date)
 function processStopwatchTime()
 {
 	var m_szStopwatchString = "";
-	if (ms_bShouldCountStopwatch && !ms_bClockInLoadingStage)
+	if (ms_bShouldCountStopwatch)
 	{
 		m_nStopwatchTimer++;
 	}	
-	var m_StopwatchDate = new Date(m_nStopwatchTimer); 
+	var m_StopwatchDate = new Date(m_nStopwatchTimer * 10); 
 	m_szStopwatchString += FormatClockNumber(m_StopwatchDate.getUTCHours()) + ":" + FormatClockNumber(m_StopwatchDate.getMinutes()) + ":" + FormatClockNumber(m_StopwatchDate.getSeconds()) + " " + FormatMillisecondsNumber(m_StopwatchDate.getMilliseconds());
 	return m_szStopwatchString; 
 }
@@ -415,7 +379,7 @@ function processStopwatchTime()
 function getCurrentStopwatchTime()
 {
 	var m_szStopwatchString = "";
-	var m_StopwatchDate = new Date(m_nStopwatchTimer);
+	var m_StopwatchDate = new Date(m_nStopwatchTimer * 10);
 	m_szStopwatchString += FormatClockNumber(m_StopwatchDate.getUTCHours()) + ":" + FormatClockNumber(m_StopwatchDate.getMinutes()) + ":" + FormatClockNumber(m_StopwatchDate.getSeconds()) + " " + FormatMillisecondsNumber(m_StopwatchDate.getMilliseconds());
 	return m_szStopwatchString; 	
 }

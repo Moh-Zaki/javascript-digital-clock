@@ -2,7 +2,6 @@ body
 {
 	margin: 0;
 	overflow: none;
-	cursor: wait;
 }
 
 p
@@ -81,30 +80,37 @@ p
 
 #clock-time-text, #clock-time-text-date, #clock-stopwatch-time
 {
+	width: 100%;
 	font-family: "Digital Clock Font";
-	color: red;
-	font-size: 1000%;
+	color: rgb(0, 255, 33);
+	font-size: 500%;
 	margin: 0;
 	text-align: center;
+}
+
+#clock-time-text
+{
+	font-size: 2000%;
 }
 
 #clock-stopwatch-time
 {
 	font-size: 400%;
-	color: orange;
+	color: rgb(0, 255, 33);
 }
 
 #clock-time-text-date
 {
+	font-family: "Digital Clock Font";
 	font-size: 500%;
 }
 
 #clock-h1
 {
 	margin: 0;
-	font-family: "Digital Clock Font";
+	font-family: Arial;
 	text-align: center;
-	color: red;
+	color: rgb(0, 255, 33);
 	font-size: 300%;
 }
 
@@ -115,7 +121,7 @@ button
 	background: transparent;
 	font-size: 200%;
 	font-family: "Digital Clock Font";
-	color: red;
+	color: rgb(0, 255, 33);
 	transition-duration: 0.5s;
 	-webkit-transition-duration: 0.5s;
 	-o-transition-duration: 0.5s;
@@ -133,7 +139,7 @@ button
 
 button:hover
 {
-	color: tomato;
+	color: rgb(8, 204, 33);
 	cursor: pointer;
 }
 
@@ -151,7 +157,7 @@ input
 {
 	padding: 1%;
 	margin: 1%;
-	color: red;
+	color: rgb(0, 255, 33);
 	font-family: "Digital Clock Font";
 	font-size: 200%;
 	background: black;
