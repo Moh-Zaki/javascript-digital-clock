@@ -59,8 +59,8 @@ function ProcessClock()
 
 	// The clock frames passed according to the difference between the start time and the counter
 	// I don't know how far it could drift off if not using Date.now
-	// TODO: this system will need to be adapted when timezone configuration will be implemented
-	// as thats where the timers would become a bit more advanced 
+	// but it will certain drift off somewhat, so even if we keep using the irregular interval of 10ms, it will re-obtain the current Date, so
+	// it's irrelevant 
 	var a = new Date();
 	ms_nClockFrameCurrentTime = Date.now();
 	m_nClockFramesPassed = ms_nClockFrameCurrentTime - ms_nClockFrameStartTime;
