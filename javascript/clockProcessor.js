@@ -17,6 +17,34 @@ var ms_nNumOfLaps = 0;
 var ms_nClockFrameStartTime = Date.now();
 var ms_nClockFrameCurrentTime = ms_nClockFrameStartTime;
 
+var ms_bHasTimezoneBeenChangedBefore = false;
+var m_CurrDate;
+
+var ms_nUTCOffset;
+
+function ConvertNumberToNegativeNumber(m_nNum)
+{
+	return m_nNum - (m_nNum * 2);
+}
+
+function ConvertNegativeNumberToNumber(m_nNum)
+{
+	return m_nNum * -1;
+}
+
+function ChangeTimezone(m_nUTCOffset, bIsHourOffset)
+{
+	if (bIsHourOffset)
+	{
+		m_CurrDate.setHours(m_CurrDate.getUTCHours() + m_nUTCOffset);
+	}
+	else
+	{
+		ms_nUTCOffset = m_CurrDate.getTimezoneOffset();
+		m_CurrDate.setHours(m_CurrDate.getUTCHours() + ConvertNegativeNumberToNumber(ms_nUTCOffset / 60));
+	}
+}
+
 function ProcessClock()
 {
 	var m_szTimeString = "";
@@ -27,10 +55,14 @@ function ProcessClock()
 	// I don't know how far it could drift off if not using Date.now
 	// TODO: this system will need to be adapted when timezone configuration will be implemented
 	// as thats where the timers would become a bit more advanced 
+	var a = new Date();
 	ms_nClockFrameCurrentTime = Date.now();
 	m_nClockFramesPassed = ms_nClockFrameCurrentTime - ms_nClockFrameStartTime;
 
-	var m_CurrDate = new Date();
+	m_CurrDate = new Date();
+
+	var m_SelectedTimezone = document.querySelector("#timezone-selector-list").value;
+	ChangeTimezone(Number(m_SelectedTimezone), true);
 
 	m_szVSHour = "";
 	m_szVSAlarmHour = "";

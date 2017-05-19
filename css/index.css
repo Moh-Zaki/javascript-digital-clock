@@ -1,7 +1,7 @@
 body
 {
 	margin: 0;
-	overflow: none;
+	background: black;
 }
 
 p
@@ -16,12 +16,29 @@ p
     src: url("../fonts/ds_digital.ttf");
 }
 
+select
+{
+	background: transparent;
+	color: rgb(0, 255, 33);
+	font-family: "Digital Clock Font";
+	outline: none;
+	border: none;
+	padding: 10%;
+}
+
+option
+{
+	background: black;
+	outline: none;
+	border: none
+}
+
 #clock-time-alarm-text
 {
 	font-family: "Digital Clock Font";
 	font-size: 100%;
 	text-align: center;
-	color: orange;
+	color: rgb(0, 255, 33);
 }
 
 #bottom-clock-btns
@@ -29,9 +46,6 @@ p
 	top: 0;
 	height: 40vh;
 	width: 100%;
-	position: fixed;
-	z-index: 1;
-	margin-top: 60vh;
 	display: block;
 }
 
@@ -44,11 +58,13 @@ p
 
 #stopwatch-lap-text
 {
-	color: red;
+	color: rgb(0, 255, 33);
 	text-align: center;
 	font-size: 100%;
 	font-family: "Digital Clock Font";
 	column-count: 4;
+	height: 20vh;
+	display: block;
 }
 
 #clock-viewport

@@ -13,7 +13,6 @@
 				<p id="clock-time-text-date"></p>
 				<p id="clock-time-text"></p>
 				<p id="clock-time-alarm-text"></p>
-				<hr>
 				<p id="clock-stopwatch-time"></p>
 			</div>
 			<div id="bottom-clock-btns">
@@ -32,6 +31,37 @@
 								<input id="alarm-form-input" type="time">
 							</form>
 							<button onclick="ToggleAlarmForm('ALARM_FORM_SEND')">Zet alarm</button>
+						</div>
+						<div id="timezone-selector-btns">
+							<form>
+								<select id="timezone-selector-list">
+									<option value="-12">GMT -12</option>
+									<option value="-11">GMT -11</option>
+									<option value="-10">GMT -10</option>
+									<option value="-9">GMT -9</option>
+									<option value="-8">GMT -8</option>
+									<option value="-7">GMT -7</option>
+									<option value="-6">GMT -6</option>
+									<option value="-5">GMT -5</option>
+									<option value="-4">GMT -4</option>
+									<option value="-3">GMT -3</option>
+									<option value="-2">GMT -2</option>
+									<option value="-1">GMT -1</option>
+									<option value="0">GMT</option>
+									<option value="1">GMT +1</option>
+									<option selected value="2">GMT +2</option>
+									<option value="3">GMT +3</option>
+									<option value="4">GMT +4</option>
+									<option value="5">GMT +5</option>
+									<option value="6">GMT +6</option>
+									<option value="7">GMT +7</option>
+									<option value="8">GMT +8</option>
+									<option value="9">GMT +9</option>
+									<option value="10">GMT +10</option>
+									<option value="11">GMT +11</option>
+									<option value="12">GMT +12</option>
+								</select>
+							</form>
 						</div>
 					</div>
 				</div>
