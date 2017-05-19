@@ -26,6 +26,7 @@ var ms_nTimerSetTime;
 var ms_bTimerSet; // ms_nTimerSetTime has a specified time which must be counted down from, and the timer is on
 var ms_bTimerOn;
 var ms_nTimeOnSet;
+var ms_bTimerGoingOff = false;
 
 function ConvertNumberToNegativeNumber(m_nNum)
 {
@@ -200,9 +201,34 @@ function ProcessClock()
 	{
 		var m_DifferenceTime = new Date();
 		var m_CurrTimeNoTimezone = new Date();
-		m_DifferenceTime.setHours((ms_nTimeOnSet.getHours() + ms_nTimerSetTime.getHours()) - m_CurrTimeNoTimezone.getHours());
-		m_DifferenceTime.setMinutes((ms_nTimeOnSet.getMinutes() + ms_nTimerSetTime.getMinutes()) - m_CurrTimeNoTimezone.getMinutes());
-		m_DifferenceTime.setSeconds((ms_nTimeOnSet.getSeconds() + ms_nTimerSetTime.getSeconds()) - m_CurrTimeNoTimezone.getSeconds());
+		if (!ms_bTimerGoingOff)
+		{
+			m_DifferenceTime.setHours((ms_nTimeOnSet.getHours() + ms_nTimerSetTime.getHours()) - m_CurrTimeNoTimezone.getHours());
+			m_DifferenceTime.setMinutes((ms_nTimeOnSet.getMinutes() + ms_nTimerSetTime.getMinutes()) - m_CurrTimeNoTimezone.getMinutes());
+			m_DifferenceTime.setSeconds((ms_nTimeOnSet.getSeconds() + ms_nTimerSetTime.getSeconds()) - m_CurrTimeNoTimezone.getSeconds());
+		}
+		else
+		{
+			m_DifferenceTime.setHours(0);
+			m_DifferenceTime.setMinutes(0);
+			m_DifferenceTime.setSeconds(0);
+		}
+
+		if (!m_DifferenceTime.getHours() && !m_DifferenceTime.getMinutes() && !m_DifferenceTime.getSeconds())
+		{
+			ms_bTimerGoingOff = true;
+			if (ms_bTimerGoingOff)
+			{
+				if ((m_nClockFramesPassed % 1000) > 499)
+				{
+					document.querySelector("#clock-viewport").style.background = "white";
+				}
+				else
+				{
+					document.querySelector("#clock-viewport").style.background = "black";
+				}
+			}			
+		}
 
 		// Get difference between current time and normal time
 		document.querySelector("#timer-time").innerHTML = "<small>TIMER SET - " + FormatClockNumber(m_DifferenceTime.getHours()) + ":" + FormatClockNumber(m_DifferenceTime.getMinutes()) + ":" + FormatClockNumber(m_DifferenceTime.getSeconds()) + "</small>";
@@ -529,7 +555,9 @@ function ToggleTimer(m_szTimerMode)
 
 		case 'TIMER_OFF':
 		ms_bTimerSet = false;
-		ms_BTimerOn = false;
+		ms_bTimerOn = false;
+		ms_bTimerGoingOff = false;
+		document.querySelector("#clock-viewport").style.background = "black";
 		document.querySelector("#timer-countdown-form").style.display = "none";
 		document.querySelector("#timer-time").innerHTML = "";
 		document.querySelector("#timer-btns").innerHTML = "";
