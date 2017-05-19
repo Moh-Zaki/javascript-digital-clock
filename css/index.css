@@ -33,7 +33,7 @@ option
 	border: none
 }
 
-#clock-time-alarm-text
+#clock-time-alarm-text, #timer-time
 {
 	font-family: "Digital Clock Font";
 	font-size: 100%;
@@ -92,6 +92,11 @@ option
 	display: block;
 	table-layout: fixed;
 	width: 100%;
+}
+
+#timer-countdown-form
+{
+	display: none;
 }
 
 #clock-time-text, #clock-time-text-date, #clock-stopwatch-time

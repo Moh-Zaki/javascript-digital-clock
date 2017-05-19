@@ -14,6 +14,7 @@
 				<p id="clock-time-text"></p>
 				<p id="clock-time-alarm-text"></p>
 				<p id="clock-stopwatch-time"></p>
+				<p id="timer-time"></p>
 			</div>
 			<div id="bottom-clock-btns">
 				<div id="actual-button-wrapper">
@@ -62,6 +63,15 @@
 									<option value="12">GMT +12</option>
 								</select>
 							</form>
+						</div>
+						<div id="timer-btns">
+							<button onclick="ToggleTimer('TIMER_ON')">Timer aan</button>
+						</div>
+						<div id="timer-countdown-form">
+							<form>
+								<input id="timer-selector-input" type="text" min="00:00:00">
+							</form>
+							<button onclick="ToggleTimer('TIMER_SUCCESS_TIME_SET')">Zet timer</button>
 						</div>
 					</div>
 				</div>

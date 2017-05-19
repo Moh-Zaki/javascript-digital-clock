@@ -22,6 +22,11 @@ var m_CurrDate;
 
 var ms_nUTCOffset;
 
+var ms_nTimerSetTime;
+var ms_bTimerSet; // ms_nTimerSetTime has a specified time which must be counted down from, and the timer is on
+var ms_bTimerOn;
+var ms_nTimeOnSet;
+
 function ConvertNumberToNegativeNumber(m_nNum)
 {
 	return m_nNum - (m_nNum * 2);
@@ -187,6 +192,34 @@ function ProcessClock()
 		else
 		{
 			document.querySelector("#clock-stopwatch-time").style.textShadow = "none";			
+		}
+	}
+
+	// Timer
+	if (ms_bTimerSet)
+	{
+		var m_DifferenceTime = new Date();
+		var m_CurrTimeNoTimezone = new Date();
+		m_DifferenceTime.setHours((ms_nTimeOnSet.getHours() + ms_nTimerSetTime.getHours()) - m_CurrTimeNoTimezone.getHours());
+		m_DifferenceTime.setMinutes((ms_nTimeOnSet.getMinutes() + ms_nTimerSetTime.getMinutes()) - m_CurrTimeNoTimezone.getMinutes());
+		m_DifferenceTime.setSeconds((ms_nTimeOnSet.getSeconds() + ms_nTimerSetTime.getSeconds()) - m_CurrTimeNoTimezone.getSeconds());
+
+		// Get difference between current time and normal time
+		document.querySelector("#timer-time").innerHTML = "<small>TIMER SET - " + FormatClockNumber(m_DifferenceTime.getHours()) + ":" + FormatClockNumber(m_DifferenceTime.getMinutes()) + ":" + FormatClockNumber(m_DifferenceTime.getSeconds()) + "</small>";
+	}
+
+	if (ms_bTimerSet)
+	{
+		if (ms_bTimerOn)
+		{	
+			if (m_CurrDate.getHours() > 19 || m_CurrDate.getHours() < 6)
+			{
+				document.querySelector("#timer-time").style.textShadow = "0 0 7.5px rgb(0, 255, 33), 0 0 7.5px rgb(0, 255, 33)";
+			}
+			else
+			{
+				document.querySelector("#timer-time").style.textShadow = "none";
+			}
 		}
 	}
 
@@ -474,6 +507,74 @@ function ToggleAlarmForm(m_szAlarmFormMode)
 		break;
 		case 'ALARM_FORM_OPEN_WINDOW':
 		document.querySelector("#alarm-form-inner-container").style.display = "block";
+		break;
+	}
+}
+
+function ToggleTimer(m_szTimerMode)
+{
+	var bFault = false;
+
+	switch (m_szTimerMode)
+	{
+		case 'TIMER_ON':
+		ms_nTimerSetTime = new Date();
+		ms_bTimerSet = false;
+		ms_bTimerOn = true;
+		document.querySelector("#timer-time").innerHTML = "";
+		document.querySelector("#timer-countdown-form").style.display = "block";
+		document.querySelector("#timer-btns").innerHTML = "";
+		document.querySelector("#timer-btns").innerHTML += "<button onclick=\"ToggleTimer('TIMER_OFF')\">Timer uit</button>"
+		break;
+
+		case 'TIMER_OFF':
+		ms_bTimerSet = false;
+		ms_BTimerOn = false;
+		document.querySelector("#timer-countdown-form").style.display = "none";
+		document.querySelector("#timer-time").innerHTML = "";
+		document.querySelector("#timer-btns").innerHTML = "";
+		document.querySelector("#timer-btns").innerHTML = "<button onclick=\"ToggleTimer('TIMER_ON')\">Timer aan</button>";
+		break;
+
+		case 'TIMER_SUCCESS_TIME_SET':
+		var a = document.querySelector("#timer-selector-input").value;
+		var m_nTime = a.split(":");
+
+		for (var i = 0; i < m_nTime.length; i++)
+		{
+			if (isNaN(Number(m_nTime[i])))
+			{
+				alert("Je kan geen letters of tekens gebruiken bij het instellen van de timer.");
+				bFault = true;
+				break;
+			}
+		}
+
+		if (bFault)
+		{
+			break;
+		}
+
+		for (var i = 0; i < m_nTime.length; i++)
+		{
+			switch (i)
+			{
+				case 0:
+				ms_nTimerSetTime.setHours(Number(m_nTime[i]));
+				break;
+				case 1:
+				ms_nTimerSetTime.setMinutes(Number(m_nTime[i]));
+				break;
+				case 2:
+				ms_nTimerSetTime.setSeconds(Number(m_nTime[i]));
+				break;
+
+			}
+		}
+		var b = Date.now();
+		ms_nTimeOnSet = new Date(b);
+		ms_bTimerSet = true;
+		document.querySelector("#timer-countdown-form").style.display = "none";
 		break;
 	}
 }
